@@ -13,6 +13,6 @@ def create_app():
 
     @app.route('/')
     def testing():
-        return 'Hello, Fuckers!'
+        return 'Hello, Test!'
     
     return app
