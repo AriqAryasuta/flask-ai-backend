@@ -1,7 +1,11 @@
-from flask import render_template
+from flask import render_template, request, jsonify
 from app.chat import bp
 
 import json
+
+from app.controller.rag import(
+    vertexModelAndEmbeddings
+)
 
 from app.models.chat import(
     Chat,
@@ -11,14 +15,12 @@ from app.models.chat import(
     Chats
 )
 
+
+
 @bp.route('/')
 def index():
-    return 'this is chat blueprint'
+    model = vertexModelAndEmbeddings()
 
 @bp.route('/newchat', methods=['POST'])
-async def post_new_chat(form_data: ChatForm):
-    try:
-        chat = Chats.new_chat(form_data)
-        return ChatResponse(**{**chat.model_dump(), "chat": json.loads(chat.chat)})
-    except Exception as e:
-        return print(e)
+async def new_chat(user_input):
+

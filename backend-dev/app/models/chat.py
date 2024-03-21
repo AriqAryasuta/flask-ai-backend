@@ -7,6 +7,7 @@ import time
 import json
 
 from config import DB
+# DB.connect()
 
 # Chat DB Schema
 
@@ -47,5 +48,7 @@ class ChatTable:
         })
         result = Chat.create(**chat.model_dump())
         return chat if result else None
+    
+    
         
-Chats = DB.create_tables([Chat])
+Chats = ChatTable(DB)
