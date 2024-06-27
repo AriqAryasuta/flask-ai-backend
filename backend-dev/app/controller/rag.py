@@ -1,9 +1,9 @@
 
 from langchain.schema import HumanMessage, SystemMessage
-from langchain.llms.vertexai import VertexAI
-from langchain.embeddings import VertexAIEmbeddings
+from langchain.llms import VertexAI
+from langchain.embeddings.vertexai import VertexAIEmbeddings
 from langchain.vectorstores.chroma import Chroma
-from langchain.chat_models.vertexai import ChatVertexAI
+from langchain.chat_models import ChatVertexAI
 from langchain.chains import RetrievalQA
 from google.cloud import aiplatform
 from typing import List
@@ -30,9 +30,10 @@ def rate_limit(max_per_minute):
             print(".", end="")
             time.sleep(sleep_time)
 
-class CustomVertexAIEmbeddings(VertexAIEmbeddings, BaseModel):
-    requests_per_minute: int
-    num_instances_per_batch: int
+class CustomVertexAIEmbeddings(VertexAIEmbeddings):
+    def init(self, requests_per_minute: int, num_instances_per_batch: int):
+        self.requests_per_minute = requests_per_minute
+        self.num_instances_per_batch = num_instances_per_batch
 
     # Overriding embed_documents method
     def embed_documents(self, texts: List[str]):

@@ -5,3 +5,4 @@ peewee
 pydantic
 vertexai
 typing
+langchain
